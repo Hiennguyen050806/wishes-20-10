@@ -17,7 +17,7 @@ def get_db_connection():
 
 
 def init_db():
-    """Khởi tạo cấu trúc bảng và nạp dữ liệu mẫu ban đầu nếu chưa có."""
+    """Khởi tạo cấu trúc bảng và nạp/cập nhật dữ liệu mẫu."""
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -32,74 +32,43 @@ def init_db():
             flower_icon TEXT DEFAULT '🌹'
         )
     """)
+    conn.commit()
+    conn.close() # Đóng kết nối tạm thời để dùng hàm save_letter bên dưới
 
-    # Kiểm tra xem đã có dữ liệu chưa, nếu chưa có thì nạp sẵn các bức thư backend mẫu
-    cursor.execute("SELECT COUNT(*) FROM letters")
-    count = cursor.fetchone()[0]
+    # KHÔNG DÙNG "if count == 0" NỮA, MÀ LUÔN QUÉT QUA DANH SÁCH ĐỂ CẬP NHẬT
+    sample_letters = [
+        (
+            "tranngocuyenthy",
+            "Uyên Thy",
+            "💌 Kính Gửi",
+            (
+                "Happy women's day ,\n\n"
+                "Nhân ngày Phụ nữ Việt Nam 20/10, Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực! .\n\n"
+                "Chúc cho Uyên Thy học đâu pass đó thi môn nào A+ môn đó nhé đặc biệt là sau này giàu đừng có quên thằng anh này:)).\n\n"
+            ),
+            "UTE",
+            "20/10/2026",
+            "🌹"
+        ),
+        (
+            "phamthanhnhan",
+            "Thanh Nhàn",
+            "💖 Gửi baby 💖",
+            (
+                "Happy women's day,\n\n"
+                "Nhân ngày 20/10! Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực!\n\n"
+                "Cảm ơn em đã bước vào cuộc sống của anh, mang theo nụ cười ngọt ngào và những khoảnh khắc ấm áp vô giá. Có em ở bên, mỗi ngày trôi qua với anh đều trở nên thật ý nghĩa và trọn vẹn.\n\n"
+            ),
+            "Love uuu",
+            "20/10/2026",
+            "🌺"
+        ),
+        # ... (thêm bao nhiêu người tùy ý vào đây) ...
+    ]
 
-    if count == 0:
-        sample_letters = [
-            (
-                "tranngocuyenthy",
-                "Uyên Thy",
-                "💌 Kính Gửi",
-                (
-                    "Happy women's day ,\n\n"
-                    "Nhân ngày Phụ nữ Việt Nam 20/10, Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực! .\n\n"
-                    "Chúc cho Uyên Thy học đâu pass đó thi môn nào A+ môn đó nhé đặc biệt là sau này giàu đừng có quên thằng anh này:)).\n\n"
-                ),
-                "UTE",
-                "20/10/2026",
-                "🌹"
-            ),
-            (
-                "phamthanhnhan",
-                "Thanh Nhàn",
-                "💖 Gửi baby 💖",
-                (
-                    "Happy women's day,\n\n"
-                    "Nhân ngày 20/10! Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực!\n\n"
-                    "Cảm ơn em đã bước vào cuộc sống của anh, mang theo nụ cười ngọt ngào và những khoảnh khắc ấm áp vô giá. Có em ở bên, mỗi ngày trôi qua với anh đều trở nên thật ý nghĩa và trọn vẹn.\n\n"
-                ),
-                "Love uuu",
-                "20/10/2026",
-                "🌺"
-            ),
-            (
-                "chị gái",
-                "Chị Gái",
-                "🌷 Gửi Người Chị Tuyệt Vời Của Em 🌷",
-                (
-                    "Chị gái yêu quý,\n\n"
-                    "Nhân ngày 20/10, chúc chị luôn xinh đẹp, trẻ trung, thành công trong công việc và gặp thật nhiều may mắn trong cuộc sống!\n\n"
-                    "Cảm ơn chị vì lúc nào cũng che chở, chia sẻ và luôn ủng hộ em trong mọi chuyện. Chúc chị sớm đạt được những mục tiêu lớn và luôn giữ nụ cười hạnh phúc trên môi nhé! 💕"
-                ),
-                "Em của Chị",
-                "20/10/2026",
-                "🌷"
-            ),
-            (
-                "bạn thân",
-                "Bạn Thân",
-                "🌻 Gửi Người Bạn Tri Kỷ 🌻",
-                (
-                    "Ê bạn thân ơi,\n\n"
-                    "Chúc mừng ngày Phụ nữ Việt Nam 20/10 nhé! Chúc bạn ngày càng xinh gái, kiếm thật nhiều tiền, ăn hoài không béo và luôn tràn đầy năng lượng tích cực!\n\n"
-                    "Cảm ơn mày đã luôn đồng hành, cùng tao trải qua bao nhiêu kỷ niệm dở khóc dở cười. Mãi là bạn tốt của nhau nhé! 🥳✨"
-                ),
-                "Đứa bạn chí cốt",
-                "20/10/2026",
-                "🌻"
-            ),
-        ]
-
-        cursor.executemany("""
-            INSERT INTO letters (passcode, recipient_name, title, content, sender_name, date_str, flower_icon)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, sample_letters)
-        conn.commit()
-
-    conn.close()
+    # Vòng lặp này sẽ tự động THÊM MỚI (nếu chưa có) hoặc CẬP NHẬT (nếu đã có passcode)
+    for data in sample_letters:
+        save_letter(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
 
 
 def get_letter_by_passcode(passcode: str):
