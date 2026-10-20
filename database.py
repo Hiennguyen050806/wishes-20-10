@@ -40,30 +40,28 @@ def init_db():
     if count == 0:
         sample_letters = [
             (
-                "mẹ yêu",
-                "Mẹ Yêu",
-                "💌 Kính Gửi Mẹ Yêu Dấu Của Con 💌",
+                "tranngocuyenthy",
+                "Uyên Thy",
+                "💌 Kính Gửi",
                 (
-                    "Mẹ yêu kính mến của con,\n\n"
-                    "Nhân ngày Phụ nữ Việt Nam 20/10, con muốn gửi đến Mẹ tất cả lòng biết ơn và sự kính yêu sâu sắc nhất từ tận đáy lòng.\n\n"
-                    "Cảm ơn Mẹ đã luôn là điểm tựa bình yên nhất trong cuộc đời con, đã hy sinh, lo lắng và dành cho con những điều tốt đẹp nhất vô điều kiện. Từng bữa cơm ấm, từng lời dặn dò của Mẹ đều là hành trang quý giá nhất theo con lớn khôn.\n\n"
-                    "Con chúc Mẹ luôn dồi dào sức khỏe, luôn nở nụ cười thật tươi và an yên trong cuộc sống. Con yêu Mẹ rất nhiều! 💕"
+                    "Happy women's day ,\n\n"
+                    "Nhân ngày Phụ nữ Việt Nam 20/10, Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực! .\n\n"
+                    "Chúc cho Uyên Thy học đâu pass đó thi môn nào A+ môn đó nhé đặc biệt là sau này giàu đừng có quên thằng anh này:)).\n\n"
                 ),
-                "Con yêu của Mẹ",
+                "UTE",
                 "20/10/2026",
                 "🌹"
             ),
             (
-                "em yêu",
-                "Em Yêu",
-                "💖 Gửi Công Chúa Bé Nhỏ Của Anh 💖",
+                "phamthanhnhan",
+                "Thanh Nhàn",
+                "💖 Gửi baby 💖",
                 (
-                    "Em yêu à,\n\n"
-                    "Chúc mừng em nhân ngày 20/10! Chúc cô gái tuyệt vời nhất của anh luôn xinh đẹp, rạng rỡ và ngập tràn niềm vui mỗi ngày.\n\n"
+                    "Happy women's day,\n\n"
+                    "Nhân ngày 20/10! Chúc em ngày càng xinh gái, học giỏi, hạnh phúc và luôn tràn đầy năng lượng tích cực!\n\n"
                     "Cảm ơn em đã bước vào cuộc sống của anh, mang theo nụ cười ngọt ngào và những khoảnh khắc ấm áp vô giá. Có em ở bên, mỗi ngày trôi qua với anh đều trở nên thật ý nghĩa và trọn vẹn.\n\n"
-                    "Dù sau này có thế nào, anh vẫn luôn ở đây chở che và yêu thương em. Yêu em nhiều hơn mỗi ngày! 🌸💕"
                 ),
-                "Anh của em",
+                "Love uuu",
                 "20/10/2026",
                 "🌺"
             ),
